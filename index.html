@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jitpisut IT</title>
+  <style>
+    /* Reset some default browser styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #f06, #8349f3);
+      color: white;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .container {
+      text-align: center;
+      animation: fadeIn 1.5s ease-in-out;
+      position: relative;
+      z-index: 10;
+    }
+
+    .profile-img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 3px solid white;
+      margin-bottom: 20px;
+      position: relative;
+      animation: bounceIn 1.5s ease-in-out, profileLoop 5s ease-in-out infinite;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+      transition: border-color 0.4s ease-in-out;
+    }
+
+    .profile-img:hover {
+      border-color: #f06;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      animation: slideIn 1.5s ease-in-out;
+    }
+
+    p {
+      font-size: 18px;
+      margin-bottom: 20px;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+    }
+
+    .button {
+      background-color: white;
+      color: #8349f3;
+      border: none;
+      padding: 15px;
+      width: 200px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid white;
+      animation: buttonLoop 5s ease-in-out infinite;
+    }
+
+    .button:hover {
+      background-color: #f06;
+      color: white;
+    }
+
+    .button:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2);
+      pointer-events: none;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: scale(0);
+    }
+
+    .button:active:after {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .button:active {
+      animation: popEffect 0.3s ease-out forwards;
+    }
+
+    .copy-message {
+      font-size: 14px;
+      margin-top: 10px;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    .show {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    /* Keyframes for animations */
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes bounceIn {
+      0% {
+        transform: scale(0);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes slideIn {
+      0% {
+        transform: translateY(-50px);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes popEffect {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.2);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes profileLoop {
+      0% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+      100% {
+        transform: translateY(0px);
+      }
+    }
+
+    @keyframes buttonLoop {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    /* Floating animated objects */
+    .floating-object {
+      position: absolute;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.3);
+      animation: float 10s ease-in-out infinite;
+    }
+
+    .floating-object:nth-child(1) {
+      width: 50px;
+      height: 50px;
+      top: 10%;
+      left: 20%;
+      animation-delay: 0s;
+    }
+
+    .floating-object:nth-child(2) {
+      width: 70px;
+      height: 70px;
+      top: 30%;
+      right: 15%;
+      animation-delay: 3s;
+    }
+
+    .floating-object:nth-child(3) {
+      width: 100px;
+      height: 100px;
+      bottom: 20%;
+      left: 30%;
+      animation-delay: 6s;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+      100% {
+        transform: translateY(0px);
+      }
+    }
+
+    /* Particles */
+    .particle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: white;
+      pointer-events: none;
+      animation: particle 1s ease forwards;
+      z-index: 999;
+    }
+
+    @keyframes particle {
+      0% {
+        opacity: 1;
+        transform: scale(1) translate(0, 0);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(0.5) translate(var(--x), var(--y));
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating animated objects -->
+  <div class="floating-object"></div>
+  <div class="floating-object"></div>
+  <div class="floating-object"></div>
+
+  <div class="container">
+    <img src="media/jitpisut.png" alt="?" class="profile-img">
+    <h1>@jitpisutsm</h1>
+    <p>ไม่ได้โปรโมท ผมหลอกเอาไอจี!</p>
+
+    <div class="buttons">
+      <button class="button" id="instaBtn">
+        เปิดหน้าโปรไฟล์
+      </button>
+      <button class="button" id="copyBtn">
+        คัดลอก
+      </button>
+      <span id="copyMessage" class="copy-message">คัดลอกชื่อแล้ว!</span>
+    </div>
+  </div>
+
+  <script>
+    // Open Instagram profile
+    document.getElementById("instaBtn").addEventListener("click", function () {
+      window.open('https://www.instagram.com/jitpisutsm/', '_blank');
+      createParticles(event);
+    });
+
+    // Copy Instagram handle
+    document.getElementById("copyBtn").addEventListener("click", function (event) {
+      navigator.clipboard.writeText('@jitpisutsm').then(function () {
+        var message = document.getElementById("copyMessage");
+        message.classList.add("show");
+        setTimeout(function () {
+          message.classList.remove("show");
+        }, 2000);
+      });
+      createParticles(event);
+    });
+
+    // Particle splash effect
+    function createParticles(event) {
+      for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        document.body.appendChild(particle);
+
+        const x = (Math.random() - 0.5) * 200 + 'px';
+        const y = (Math.random() - 0.5) * 200 + 'px';
+        particle.style.setProperty('--x', x);
+        particle.style.setProperty('--y', y);
+        particle.style.left = event.pageX + 'px';
+        particle.style.top = event.pageY + 'px';
+
+        setTimeout(() => {
+          particle.remove();
+        }, 1000);
+      }
+    }
+  </script>
+
+</body>
+  </html>
+  
